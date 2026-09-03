@@ -14,15 +14,10 @@ import {
   MapPin, 
   Calendar, 
   Trash2,
-  Lock,
-  LogIn,
   LogOut,
-  Info,
-  ExternalLink,
-  Sparkles,
   RefreshCw
 } from 'lucide-react';
-import { fixtures, teams, venues, currentTournament } from '../data/cricketData';
+import { fixtures, venues, currentTournament } from '../data/cricketData';
 
 const GOOGLE_SHEETS_WEBHOOK_URL = import.meta.env.VITE_GOOGLE_SHEETS_WEBHOOK_URL;
 
@@ -30,18 +25,20 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
   const [activeTab, setActiveTab] = useState('rate'); // 'rate' | 'history'
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
-  const [sheetSyncStatus, setSheetSyncStatus] = useState(null); // null | 'synced' | 'local_only'
+  const [sheetSyncStatus, setSheetSyncStatus] = useState(null);
   const [copiedNotification, setCopiedNotification] = useState(false);
 
   // Form State
-  const [selectedMatchId, setSelectedMatchId] = useState(fixtures[0]?.id || '');
+  const [selectedMatchId, setSelectedMatchId] = useState(fixtures[0]?.id || 'custom');
   const [matchNumber, setMatchNumber] = useState('Match 1 (Opening Game)');
   const [matchDate, setMatchDate] = useState(fixtures[0]?.date || 'Saturday, Sep 5, 2026');
   const [venue, setVenue] = useState('Lasky Recreation Park');
   const [umpireName, setUmpireName] = useState(clerkUser?.fullName || clerkUser?.primaryEmailAddress?.emailAddress || 'Tariqul Anam');
   const [umpireEmail, setUmpireEmail] = useState(clerkUser?.primaryEmailAddress?.emailAddress || clerkUser?.email || 'tariqul@bcami.org');
-  const [teamEvaluated, setTeamEvaluated] = useState('Power Rangers');
-  const [opponentTeam, setOpponentTeam] = useState("Sultan's of Sylhet");
+  
+  // Flexible Team Inputs (No Team DB required)
+  const [teamEvaluated, setTeamEvaluated] = useState('Team A');
+  const [opponentTeam, setOpponentTeam] = useState('Team B');
 
   // Fair Play Assessment Rating Fields (1 to 10 scale)
   const [ratings, setRatings] = useState({
@@ -66,8 +63,8 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
           date: 'Saturday, Sep 5, 2026',
           match: 'Match 1 (Opening Game)',
           venue: 'Lasky Recreation Park',
-          team: 'Power Rangers',
-          opponent: "Sultan's of Sylhet",
+          team: 'Team A',
+          opponent: 'Team B',
           umpire: 'Tariqul Anam',
           umpireEmail: 'tariqul@bcami.org',
           scores: {
@@ -137,8 +134,8 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
       date: matchDate,
       match: matchNumber,
       venue,
-      team: teamEvaluated,
-      opponent: opponentTeam,
+      team: teamEvaluated.trim(),
+      opponent: opponentTeam.trim(),
       umpire: umpireName || 'Official Umpire',
       umpireEmail: umpireEmail || 'umpire@bcami.org',
       scores: { ...ratings },
@@ -360,7 +357,7 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs sm:text-sm">
                 <div>
-                  <label className="block text-slate-300 font-semibold mb-1.5">Select Fixture / Game</label>
+                  <label className="block text-slate-300 font-semibold mb-1.5">Select Scheduled Fixture</label>
                   <select
                     value={selectedMatchId}
                     onChange={handleMatchSelect}
@@ -368,9 +365,10 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
                   >
                     {fixtures.map(f => (
                       <option key={f.id} value={f.id}>
-                        {f.matchNo}: {f.team1} vs {f.team2}
+                        {f.matchNo} ({f.date})
                       </option>
                     ))}
+                    <option value="custom">Custom Match</option>
                   </select>
                 </div>
 
@@ -399,29 +397,27 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
                 </div>
 
                 <div>
-                  <label className="block text-slate-300 font-semibold mb-1.5">Team Evaluated</label>
-                  <select
+                  <label className="block text-slate-300 font-semibold mb-1.5">Team Being Evaluated</label>
+                  <input
+                    type="text"
+                    required
                     value={teamEvaluated}
                     onChange={(e) => setTeamEvaluated(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-emerald-500 font-bold text-emerald-400"
-                  >
-                    {teams.map(t => (
-                      <option key={t.id} value={t.name}>{t.name}</option>
-                    ))}
-                  </select>
+                    placeholder="Enter team name"
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white font-bold text-emerald-400 focus:outline-none focus:border-emerald-500"
+                  />
                 </div>
 
                 <div>
                   <label className="block text-slate-300 font-semibold mb-1.5">Opponent Team</label>
-                  <select
+                  <input
+                    type="text"
+                    required
                     value={opponentTeam}
                     onChange={(e) => setOpponentTeam(e.target.value)}
+                    placeholder="Enter opponent team name"
                     className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-emerald-500"
-                  >
-                    {teams.map(t => (
-                      <option key={t.id} value={t.name}>{t.name}</option>
-                    ))}
-                  </select>
+                  />
                 </div>
 
                 <div>
@@ -668,7 +664,7 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
                     <thead>
                       <tr className="border-b border-slate-800 text-slate-400">
                         <th className="py-3 px-3 font-semibold">Match / Date</th>
-                        <th className="py-3 px-3 font-semibold">Team</th>
+                        <th className="py-3 px-3 font-semibold">Team Evaluated</th>
                         <th className="py-3 px-3 font-semibold">Venue</th>
                         <th className="py-3 px-3 text-center font-semibold">Score</th>
                         <th className="py-3 px-3 text-center font-semibold">Status</th>

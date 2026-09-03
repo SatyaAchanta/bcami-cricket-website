@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import { Home, ShieldCheck, Users, Calendar, Radio, Menu, X, LogIn } from 'lucide-react';
+import { Home, ShieldCheck, Calendar, MapPin, Info, Menu, X, LogIn } from 'lucide-react';
 import { ClerkLiveNavbar } from './ClerkAuthBridge';
 import { orgInfo } from '../data/cricketData';
 
 export default function Navbar({ onOpenAuth, clerkUser, isClerkLive }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Exact requested navigation order:
-  // 1. Homepage | 2. Umpiring Assessment | 3. Teams | 4. Schedule | 5. Live Links
   const navLinks = [
     { name: 'Home', href: '#tournament', icon: Home },
     { name: 'Umpire Assessment', href: '#umpire-portal', icon: ShieldCheck, highlight: true },
-    { name: 'Teams', href: '#teams', icon: Users },
     { name: 'Schedule', href: '#schedule', icon: Calendar },
-    { name: 'Live Links', href: '#live', icon: Radio, isLiveBadge: true },
+    { name: 'Detroit Grounds', href: '#grounds', icon: MapPin },
+    { name: 'About BCAMI', href: '#about', icon: Info },
   ];
 
   const handleNavClick = (e, href) => {
@@ -57,8 +55,8 @@ export default function Navbar({ onOpenAuth, clerkUser, isClerkLive }) {
             </div>
           </a>
 
-          {/* Desktop Navigation Links (Exact 5 items in order) */}
-          <nav className="hidden lg:flex items-center gap-1.5">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden md:flex items-center gap-2">
             {navLinks.map((item) => (
               <a
                 key={item.name}
@@ -67,16 +65,11 @@ export default function Navbar({ onOpenAuth, clerkUser, isClerkLive }) {
                 className={`px-3.5 py-2 rounded-xl text-xs xl:text-sm font-semibold transition-all flex items-center gap-2 ${
                   item.highlight
                     ? 'bg-emerald-950/70 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-900 hover:text-white'
-                    : item.isLiveBadge
-                    ? 'text-red-400 hover:text-white hover:bg-red-950/40'
                     : 'text-slate-300 hover:text-white hover:bg-slate-900'
                 }`}
               >
-                <item.icon className={`w-4 h-4 ${item.isLiveBadge ? 'text-red-500 animate-pulse' : 'text-emerald-400'}`} />
+                <item.icon className="w-4 h-4 text-emerald-400" />
                 <span>{item.name}</span>
-                {item.isLiveBadge && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping"></span>
-                )}
               </a>
             ))}
           </nav>
@@ -107,7 +100,7 @@ export default function Navbar({ onOpenAuth, clerkUser, isClerkLive }) {
             {/* Mobile Hamburger Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+              className="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -119,7 +112,7 @@ export default function Navbar({ onOpenAuth, clerkUser, isClerkLive }) {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-800 bg-slate-950 px-4 pt-3 pb-6 space-y-2">
+        <div className="md:hidden border-t border-slate-800 bg-slate-950 px-4 pt-3 pb-6 space-y-2">
           {navLinks.map((item) => (
             <a
               key={item.name}
@@ -130,14 +123,9 @@ export default function Navbar({ onOpenAuth, clerkUser, isClerkLive }) {
               }`}
             >
               <div className="flex items-center gap-3">
-                <item.icon className={`w-5 h-5 ${item.isLiveBadge ? 'text-red-500' : 'text-emerald-400'}`} />
+                <item.icon className="w-5 h-5 text-emerald-400" />
                 <span>{item.name}</span>
               </div>
-              {item.isLiveBadge && (
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-red-600/20 text-red-400 border border-red-500/30">
-                  LIVE
-                </span>
-              )}
             </a>
           ))}
           <div className="pt-3 border-t border-slate-800">

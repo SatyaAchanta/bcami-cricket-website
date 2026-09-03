@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import UmpirePortal from './components/UmpirePortal';
-import TeamsSection from './components/TeamsSection';
 import MatchCenter from './components/MatchCenter';
-import LiveGameCenter from './components/LiveGameCenter';
 import VenuesGuide from './components/VenuesGuide';
 import AboutLeadership from './components/AboutLeadership';
 import AuthModal from './components/AuthModal';
@@ -43,23 +41,23 @@ export default function App({ isClerkLive = false }) {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-white">
       
-      {/* Top Banner */}
+      {/* Top Announcement Banner */}
       <div className="bg-gradient-to-r from-emerald-950 via-slate-950 to-red-950 border-b border-slate-800 text-center py-2 px-4 text-xs font-semibold text-emerald-300 flex items-center justify-center gap-2">
         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
         <span>{currentTournament.title} • {currentTournament.dates} • Lasky Recreation Park, Detroit</span>
       </div>
 
-      {/* Navigation (1. Home | 2. Umpire Assessment | 3. Teams | 4. Schedule | 5. Live Links) */}
+      {/* Navigation */}
       <Navbar
         isClerkLive={isClerkLive}
         clerkUser={clerkUser}
         onOpenAuth={() => setAuthModalOpen(true)}
       />
 
-      {/* Main Pages in Exact Requested Order */}
+      {/* Main Sections */}
       <main className="flex-1 space-y-0">
         
-        {/* 1. HOMEPAGE & HERO BANNER */}
+        {/* 1. HOMEPAGE */}
         <Hero />
 
         {/* 2. UMPIRING ASSESSMENT PORTAL */}
@@ -70,19 +68,13 @@ export default function App({ isClerkLive = false }) {
           onSimulateLogout={handleLogout}
         />
 
-        {/* 3. TEAMS & FRANCHISE SQUADS */}
-        <TeamsSection />
-
-        {/* 4. SCHEDULE & POINTS TABLE STANDINGS */}
+        {/* 3. SCHEDULE & FIXTURES */}
         <MatchCenter />
 
-        {/* 5. LIVE LINKS TO THE GAME & DIGITAL SCORING */}
-        <LiveGameCenter />
-
-        {/* DETROIT GROUNDS & VENUES DIRECTORY */}
+        {/* 4. DETROIT GROUNDS & VENUES */}
         <VenuesGuide />
 
-        {/* ABOUT BCAMI & LEADERSHIP */}
+        {/* 5. ABOUT BCAMI & GOVERNANCE */}
         <AboutLeadership />
 
       </main>
