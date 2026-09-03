@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Home, ShieldCheck, Calendar, MapPin, Info, Menu, X, LogIn } from 'lucide-react';
+import { Home, ShieldCheck, Calendar, MapPin, Menu, X, LogIn } from 'lucide-react';
 import { ClerkLiveNavbar } from './ClerkAuthBridge';
 import { orgInfo } from '../data/cricketData';
 
@@ -11,7 +11,6 @@ export default function Navbar({ onOpenAuth, clerkUser, isClerkLive }) {
     { name: 'Umpire Assessment', href: '#umpire-portal', icon: ShieldCheck, highlight: true },
     { name: 'Schedule', href: '#schedule', icon: Calendar },
     { name: 'Detroit Grounds', href: '#grounds', icon: MapPin },
-    { name: 'About BCAMI', href: '#about', icon: Info },
   ];
 
   const handleNavClick = (e, href) => {

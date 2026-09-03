@@ -4,7 +4,6 @@ import Hero from './components/Hero';
 import UmpirePortal from './components/UmpirePortal';
 import MatchCenter from './components/MatchCenter';
 import VenuesGuide from './components/VenuesGuide';
-import AboutLeadership from './components/AboutLeadership';
 import AuthModal from './components/AuthModal';
 import ContactFooter from './components/ContactFooter';
 import { currentTournament } from './data/cricketData';
@@ -47,14 +46,14 @@ export default function App({ isClerkLive = false }) {
         <span>{currentTournament.title} • {currentTournament.dates} • Lasky Recreation Park, Detroit</span>
       </div>
 
-      {/* Navigation */}
+      {/* Navigation (Home | Umpire Assessment | Schedule | Detroit Grounds) */}
       <Navbar
         isClerkLive={isClerkLive}
         clerkUser={clerkUser}
         onOpenAuth={() => setAuthModalOpen(true)}
       />
 
-      {/* Main Sections */}
+      {/* Main Streamlined Sections */}
       <main className="flex-1 space-y-0">
         
         {/* 1. HOMEPAGE */}
@@ -68,14 +67,11 @@ export default function App({ isClerkLive = false }) {
           onSimulateLogout={handleLogout}
         />
 
-        {/* 3. SCHEDULE & FIXTURES */}
+        {/* 3. TOURNAMENT SCHEDULE */}
         <MatchCenter />
 
-        {/* 4. DETROIT GROUNDS & VENUES */}
+        {/* 4. DETROIT GROUNDS & DIRECTIONS */}
         <VenuesGuide />
-
-        {/* 5. ABOUT BCAMI & GOVERNANCE */}
-        <AboutLeadership />
 
       </main>
 

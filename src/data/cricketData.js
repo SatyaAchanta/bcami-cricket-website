@@ -9,13 +9,12 @@ export const orgInfo = {
   socials: {
     facebook: "https://www.facebook.com/bcamiusa",
     instagram: "https://instagram.com/BCAMIUSA",
-    youtube: "https://youtube.com",
   },
   stats: [
     { label: "Annual Editions", value: "9th" },
     { label: "Community Matches", value: "20+" },
-    { label: "Iconic Detroit Grounds", value: "3" },
-    { label: "Active Cricket Community", value: "100s" },
+    { label: "Detroit Venues", value: "3" },
+    { label: "Cricket Community", value: "Michigan" },
   ]
 };
 
@@ -29,7 +28,7 @@ export const currentTournament = {
   primaryVenue: "Lasky Recreation Park, Detroit, MI",
   format: "T20 Group Stage + Knockouts",
   status: "UPCOMING",
-  announcement: "The 9th BD Community Cup 2026 is officially here! Community cricket tournament across Lasky Park, Jayne Field, and Delia Park.",
+  announcement: "The 9th BD Community Cup 2026 is officially here! September 5 - 7, 2026 across Detroit grounds.",
 };
 
 export const venues = [
@@ -39,7 +38,7 @@ export const venues = [
     badge: "Primary Tournament Hub",
     city: "Detroit, MI",
     address: "13200 Fenelon St, Detroit, MI 48212",
-    description: "The historic headquarters of BCAMI and the main stage for BD Community Cup Finals and trophy presentations.",
+    description: "The primary headquarters and main stage for BD Community Cup matches, finals, and trophy presentations.",
     pitchType: "Artificial Turf / Matting Mat on Compact Base",
     features: ["Spectator Bleachers", "Practice Nets", "Scoreboard Tower", "Free Parking"],
     googleMapsUrl: "https://maps.google.com/?q=Lasky+Recreation+Park+Detroit+MI"
@@ -50,7 +49,7 @@ export const venues = [
     badge: "Group Stage Arena",
     city: "Detroit, MI",
     address: "Conant St & Charles St, Detroit, MI 48212",
-    description: "Expansive green park hosting tournament matches with large boundary dimensions.",
+    description: "Expansive green park hosting group stage fixtures with large boundary dimensions.",
     pitchType: "Compact Turf Strip",
     features: ["Open Field Seating", "Multiple Pitch Layouts", "Adjacent Parking"],
     googleMapsUrl: "https://maps.google.com/?q=Jayne+Field+Detroit+MI"
@@ -61,7 +60,7 @@ export const venues = [
     badge: "Tournament Turf",
     city: "Sterling Heights, MI",
     address: "3001 18 Mile Rd, Sterling Heights, MI 48314",
-    description: "Premium suburban facility utilized for weekend double-headers and playoff fixtures.",
+    description: "Suburban facility utilized for weekend double-headers and playoff fixtures.",
     pitchType: "Quality Turf Strip",
     features: ["Pavilion & Restrooms", "Picnic Shelters", "Family Seating Area"],
     googleMapsUrl: "https://maps.google.com/?q=Delia+Park+Sterling+Heights+MI"
@@ -103,7 +102,7 @@ export const fixtures = [
     time: "4:30 PM EDT",
     venue: "Lasky Recreation Park",
     status: "UPCOMING",
-    note: "Evening group stage clash."
+    note: "Evening group stage match."
   },
   {
     id: "m04",
@@ -140,32 +139,5 @@ export const fixtures = [
     venue: "Lasky Recreation Park",
     status: "UPCOMING",
     note: "Championship final match, trophy presentation & prize distributions."
-  }
-];
-
-export const executiveCommittee = [
-  {
-    name: "Mohammad K. Islam",
-    role: "President, BCAMI",
-    bio: "Pioneering the growth of Bangladeshi cricket in Michigan for over a decade.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80"
-  },
-  {
-    name: "Mahbubur Rahman",
-    role: "General Secretary",
-    bio: "Overseeing tournament operations, ground logistics, and community coordination.",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80"
-  },
-  {
-    name: "Tariqul Anam",
-    role: "Tournament Director",
-    bio: "Head of BD Community Cup tournament scheduling, match officials, and scoring.",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80"
-  },
-  {
-    name: "Kamrul Hassan",
-    role: "Communications & Media Coordinator",
-    bio: "Managing announcements, event coverage, and official communications.",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&q=80"
   }
 ];
