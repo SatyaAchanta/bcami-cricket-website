@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import { Home, ShieldCheck, Users, Calendar, MapPin, Menu, X } from 'lucide-react';
+import { Home, ShieldCheck, Calendar, MapPin, Menu, X } from 'lucide-react';
 import { orgInfo } from '../data/cricketData';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Exact requested navigation order:
-  // 1. Home | 2. Umpire Assessment | 3. Teams | 4. Schedule | 5. Detroit Grounds
+  // Exact navigation links: Home | Umpire Assessment | Schedule | Detroit Grounds
   const navLinks = [
     { name: 'Home', href: '#tournament', icon: Home },
     { name: 'Umpire Assessment', href: '#umpire-portal', icon: ShieldCheck, highlight: true },
-    { name: 'Teams', href: '#teams', icon: Users },
     { name: 'Schedule', href: '#schedule', icon: Calendar },
     { name: 'Detroit Grounds', href: '#grounds', icon: MapPin },
   ];
@@ -63,7 +61,7 @@ export default function Navbar() {
                 key={item.name}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className={`px-3.5 py-2 rounded-xl text-xs xl:text-sm font-semibold transition-all flex items-center gap-2 ${
+                className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 ${
                   item.highlight
                     ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-900 hover:text-white shadow-sm'
                     : 'text-slate-300 hover:text-white hover:bg-slate-900'

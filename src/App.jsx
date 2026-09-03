@@ -2,7 +2,6 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import UmpirePortal from './components/UmpirePortal';
-import TeamsSection from './components/TeamsSection';
 import MatchCenter from './components/MatchCenter';
 import VenuesGuide from './components/VenuesGuide';
 import ContactFooter from './components/ContactFooter';
@@ -18,10 +17,10 @@ export default function App() {
         <span>{currentTournament.title} • {currentTournament.dates} • Lasky Recreation Park, Detroit</span>
       </div>
 
-      {/* Navigation (1. Home | 2. Umpire Assessment | 3. Teams | 4. Schedule | 5. Detroit Grounds) */}
+      {/* Navigation (Home | Umpire Assessment | Schedule | Detroit Grounds) */}
       <Navbar />
 
-      {/* Main Sections in Exact Requested Sequence */}
+      {/* Main Sections */}
       <main className="flex-1 space-y-0">
         
         {/* 1. HOMEPAGE */}
@@ -30,13 +29,10 @@ export default function App() {
         {/* 2. UMPIRING ASSESSMENT PORTAL */}
         <UmpirePortal />
 
-        {/* 3. TEAMS SHOWCASE */}
-        <TeamsSection />
-
-        {/* 4. TOURNAMENT SCHEDULE */}
+        {/* 3. TOURNAMENT SCHEDULE & FIXTURES */}
         <MatchCenter />
 
-        {/* 5. DETROIT GROUNDS & DIRECTIONS */}
+        {/* 4. DETROIT GROUNDS & DIRECTIONS */}
         <VenuesGuide />
 
       </main>
