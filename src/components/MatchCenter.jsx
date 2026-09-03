@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, MapPin, ChevronRight, Filter, X, ShieldCheck } from 'lucide-react';
+import { Calendar, Clock, MapPin, ChevronRight, Filter, X, ShieldCheck, Swords } from 'lucide-react';
 import { fixtures, currentTournament } from '../data/cricketData';
 
 export default function MatchCenter() {
@@ -33,7 +33,7 @@ export default function MatchCenter() {
           <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-400 flex-wrap">
             <Filter className="w-4 h-4 text-emerald-400" />
             <span className="font-semibold text-slate-300">Filter Stage:</span>
-            {['all', 'Group A', 'Group B', 'Knockout'].map((s) => (
+            {['all', 'Group A', 'Group B', 'Knockout', 'Championship'].map((s) => (
               <button
                 key={s}
                 onClick={() => setStageFilter(s)}
@@ -66,21 +66,32 @@ export default function MatchCenter() {
                 {/* Header with Match No & Time */}
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-bold text-emerald-400 px-2.5 py-1 rounded-md bg-emerald-950 border border-emerald-800/40">
-                    {fixture.stage}
+                    {fixture.matchNo} • {fixture.stage}
                   </span>
-                  <span className="text-slate-400 flex items-center gap-1 font-medium">
+                  <span className="text-slate-400 flex items-center gap-1 font-semibold">
                     <Clock className="w-3.5 h-3.5 text-slate-500" />
                     {fixture.time}
                   </span>
                 </div>
 
-                {/* Match title / Game identifier */}
-                <div className="pt-2 pb-3 border-y border-slate-900 space-y-1 text-center">
-                  <div className="text-lg font-black text-white">
-                    {fixture.matchNo}
+                {/* Team 1 vs Team 2 Matchup Block */}
+                <div className="pt-3 pb-3 border-y border-slate-900 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-base font-black text-white tracking-tight">
+                      {fixture.team1}
+                    </span>
                   </div>
-                  <div className="text-xs text-emerald-400 font-semibold">
-                    {fixture.note}
+
+                  <div className="flex items-center justify-center gap-2 text-[11px] font-bold text-slate-500 uppercase tracking-widest py-0.5">
+                    <div className="h-px bg-slate-800 flex-1"></div>
+                    <span className="px-2 py-0.5 bg-slate-900 rounded border border-slate-800 text-emerald-400">VS</span>
+                    <div className="h-px bg-slate-800 flex-1"></div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-base font-black text-white tracking-tight">
+                      {fixture.team2}
+                    </span>
                   </div>
                 </div>
 
@@ -100,12 +111,12 @@ export default function MatchCenter() {
 
               {/* Bottom Card Action */}
               <div className="pt-4 border-t border-slate-900 flex items-center justify-between">
-                <span className="text-[11px] text-slate-500">
-                  T20 Official Game
+                <span className="text-[11px] text-slate-500 truncate max-w-[170px]">
+                  {fixture.note}
                 </span>
                 <button
                   onClick={() => setSelectedMatch(fixture)}
-                  className="text-xs font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 group"
+                  className="text-xs font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 group shrink-0"
                 >
                   <span>Details</span>
                   <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -120,7 +131,7 @@ export default function MatchCenter() {
 
       {/* Match Details Modal */}
       {selectedMatch && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-150">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-in fade-in duration-150">
           <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-lg w-full space-y-6 shadow-2xl relative">
             
             <button
@@ -132,13 +143,23 @@ export default function MatchCenter() {
 
             <div className="space-y-1">
               <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
-                {selectedMatch.stage}
+                {selectedMatch.matchNo} • {selectedMatch.stage}
               </span>
-              <h3 className="text-xl font-black text-white">{selectedMatch.matchNo}</h3>
+              <h3 className="text-xl font-black text-white">Match Overview</h3>
             </div>
 
-            <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            {/* Teams Head-to-Head */}
+            <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3 text-center">
+              <div className="text-lg font-black text-white">
+                {selectedMatch.team1}
+              </div>
+              <div className="inline-block px-3 py-1 bg-emerald-950 border border-emerald-500/30 text-emerald-400 text-xs font-bold rounded-full">
+                VS
+              </div>
+              <div className="text-lg font-black text-white">
+                {selectedMatch.team2}
+              </div>
+              <p className="text-xs text-slate-400 pt-2 border-t border-slate-900">
                 {selectedMatch.note}
               </p>
             </div>
@@ -149,12 +170,12 @@ export default function MatchCenter() {
                 <span className="font-semibold text-white">{selectedMatch.date} @ {selectedMatch.time}</span>
               </div>
               <div className="flex justify-between py-1.5 border-b border-slate-800">
-                <span className="text-slate-500">Venue:</span>
+                <span className="text-slate-500">Ground Location:</span>
                 <span className="font-semibold text-emerald-400">{selectedMatch.venue}</span>
               </div>
               <div className="flex justify-between py-1.5">
-                <span className="text-slate-500">Match Rules:</span>
-                <span className="font-semibold text-white">ICC Standard T20 Playing Conditions</span>
+                <span className="text-slate-500">Playing Format:</span>
+                <span className="font-semibold text-white">T20 Official Game</span>
               </div>
             </div>
 
@@ -165,7 +186,7 @@ export default function MatchCenter() {
                 className="flex-1 inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs"
               >
                 <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Rate Game in Umpire Portal</span>
+                <span>Rate Match in Umpire Portal</span>
               </a>
               <button
                 onClick={() => setSelectedMatch(null)}
