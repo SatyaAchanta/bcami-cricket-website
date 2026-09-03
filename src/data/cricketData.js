@@ -1,6 +1,7 @@
 export const orgInfo = {
   name: "Bangladesh Cricket Association of Michigan",
   shortName: "BCAMI",
+  logo: "/logos/bcami-association.jpeg",
   tagline: "Empowering Cricket & Connecting the Community Across Michigan",
   est: "2016",
   email: "bcamiusa@gmail.com",
@@ -21,6 +22,7 @@ export const orgInfo = {
 export const currentTournament = {
   title: "9th BD Community Cup 2026",
   shortTitle: "BD Community Cup 9",
+  logo: "/logos/bd-community-cup-logo.jpeg",
   badge: "Labor Day Weekend Special",
   dates: "September 5 - 7, 2026",
   targetDate: "2026-09-05T09:00:00-04:00",

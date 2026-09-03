@@ -28,8 +28,17 @@ export default function Navbar({ onOpenAuth, clerkUser, isClerkLive }) {
           
           {/* Brand Logo & Name */}
           <a href="#" className="flex items-center gap-3 group">
-            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-950 border border-emerald-500/40 flex items-center justify-center shadow-lg shadow-emerald-900/20 group-hover:scale-105 transition-transform">
-              <span className="text-lg font-black tracking-wider text-white">BCA</span>
+            <div className="w-12 h-12 rounded-xl overflow-hidden bg-slate-900 border border-emerald-500/40 flex items-center justify-center shadow-lg shadow-emerald-900/20 group-hover:scale-105 transition-transform p-0.5">
+              <img
+                src={orgInfo.logo}
+                alt="BCAMI Logo"
+                className="w-full h-full object-cover rounded-lg"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextElementSibling.style.display = 'flex';
+                }}
+              />
+              <span className="text-lg font-black tracking-wider text-white hidden">BCA</span>
             </div>
             <div>
               <div className="flex items-center gap-2">

@@ -48,22 +48,34 @@ export default function Hero({ onExploreFixtures, onExploreTeams }) {
           {/* Left Hero Details */}
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             
-            {/* Top Tournament Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs sm:text-sm font-semibold tracking-wide">
-              <Sparkles className="w-4 h-4 text-emerald-300" />
-              <span>{currentTournament.badge} • Detroit, Michigan</span>
+            {/* Top Tournament Badge & Logo */}
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs sm:text-sm font-semibold tracking-wide">
+                <Sparkles className="w-4 h-4 text-emerald-300" />
+                <span>{currentTournament.badge} • Detroit, Michigan</span>
+              </div>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1]">
-              The Heart of <br className="hidden sm:inline" />
-              <span className="bg-gradient-to-r from-emerald-400 via-teal-200 to-amber-300 bg-clip-text text-transparent">
-                Michigan Cricket
-              </span>
-            </h1>
+            {/* Main Headline with Tournament Banner Logo */}
+            <div className="space-y-4">
+              <div className="max-w-md mx-auto lg:mx-0 rounded-2xl overflow-hidden border border-emerald-500/30 bg-slate-900/90 shadow-2xl p-2 group hover:border-emerald-400/60 transition-all">
+                <img
+                  src={currentTournament.logo}
+                  alt={currentTournament.title}
+                  className="w-full h-auto object-contain rounded-xl max-h-48 sm:max-h-56 mx-auto"
+                />
+              </div>
+
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15]">
+                Welcome to the <br className="hidden sm:inline" />
+                <span className="bg-gradient-to-r from-emerald-400 via-teal-200 to-amber-300 bg-clip-text text-transparent">
+                  {currentTournament.title}
+                </span>
+              </h1>
+            </div>
 
             <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Welcome to the official home of the <strong>{currentTournament.title}</strong> organized by the Bangladesh Cricket Association of Michigan (BCAMI). Uniting teams, fans, and legends across Detroit.
+              Organized by the <strong>Bangladesh Cricket Association of Michigan (BCAMI)</strong>. Uniting 8 premier franchises, passionate fans, and community legends across Detroit's top grounds.
             </p>
 
             {/* Key Event Badges */}

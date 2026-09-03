@@ -7,8 +7,15 @@ export default function AboutLeadership() {
     <section id="about" className="py-16 sm:py-20 bg-slate-950 border-b border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3">
+        {/* Section Header with Logo */}
+        <div className="text-center max-w-3xl mx-auto space-y-4">
+          <div className="w-20 h-20 rounded-2xl overflow-hidden bg-slate-900 border border-emerald-500/40 mx-auto shadow-xl p-1">
+            <img
+              src={orgInfo.logo}
+              alt="BCAMI Logo"
+              className="w-full h-full object-cover rounded-xl"
+            />
+          </div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider">
             <Info className="w-3.5 h-3.5" />
             <span>Organization & Governance</span>

@@ -30,8 +30,12 @@ export default function ContactFooter() {
           {/* Left Column: Info & Contact details */}
           <div className="lg:col-span-5 space-y-6">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-950 border border-emerald-500/30 flex items-center justify-center font-black text-xl text-white shadow-lg">
-                BCA
+              <div className="w-12 h-12 rounded-xl overflow-hidden bg-slate-900 border border-emerald-500/40 flex items-center justify-center p-0.5 shadow-lg">
+                <img
+                  src={orgInfo.logo}
+                  alt="BCAMI Logo"
+                  className="w-full h-full object-cover rounded-lg"
+                />
               </div>
               <div>
                 <span className="font-extrabold text-xl text-white tracking-tight">BCAMI USA</span>
