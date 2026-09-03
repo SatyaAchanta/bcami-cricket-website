@@ -56,11 +56,11 @@ export default function Hero() {
 
             {/* Headline with Logo */}
             <div className="space-y-4">
-              <div className="max-w-md mx-auto lg:mx-0 rounded-2xl overflow-hidden border border-emerald-500/30 bg-slate-900/90 shadow-2xl p-2 group hover:border-emerald-400/60 transition-all">
+              <div className="max-w-md mx-auto lg:mx-0 flex items-center justify-center lg:justify-start">
                 <img
                   src={currentTournament.logo}
                   alt={currentTournament.title}
-                  className="w-full h-auto object-contain rounded-xl max-h-48 sm:max-h-56 mx-auto"
+                  className="w-full h-auto object-contain max-h-52 sm:max-h-60 drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] hover:scale-102 transition-transform"
                 />
               </div>
 

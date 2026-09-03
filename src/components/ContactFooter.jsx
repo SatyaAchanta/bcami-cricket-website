@@ -13,11 +13,11 @@ export default function ContactFooter() {
           {/* Brand & Mission */}
           <div className="space-y-4 max-w-xl">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl overflow-hidden bg-slate-900 border border-emerald-500/40 flex items-center justify-center p-0.5 shadow-lg">
+              <div className="w-12 h-12 flex items-center justify-center drop-shadow-[0_4px_12px_rgba(16,185,129,0.25)]">
                 <img
                   src={orgInfo.logo}
                   alt="BCAMI Logo"
-                  className="w-full h-full object-cover rounded-lg"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <div>
