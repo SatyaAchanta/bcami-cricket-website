@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, MapPin, Info, ShieldCheck, User, LogIn, Menu, X } from 'lucide-react';
 import { ClerkLiveNavbar } from './ClerkAuthBridge';
+import { orgInfo } from '../data/cricketData';
 
 export default function Navbar({ onOpenAuth, clerkUser, isClerkLive }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
