@@ -12,34 +12,44 @@ export const orgInfo = {
   },
   stats: [
     { label: "Participating Teams", value: "8" },
-    { label: "League Matches", value: "10" },
-    { label: "Playoff Matches", value: "3" },
+    { label: "Official Umpires", value: "7" },
+    { label: "Tournament Matches", value: "12+" },
     { label: "Detroit Grounds", value: "3" },
   ]
 };
 
 export const currentTournament = {
-  title: "9th BD Community Cup 2026",
-  shortTitle: "BD Community Cup 9",
+  title: "2026 BD Community Cup",
+  shortTitle: "2026 BDCC",
   logo: "/logos/bd-community-cup-logo.jpeg",
-  badge: "Labor Day Weekend Special",
+  badge: "Official Tournament",
   dates: "September 5 - 7, 2026",
   targetDate: "2026-09-05T10:00:00-04:00",
   primaryVenue: "Lasky Recreation Park, Detroit, MI",
-  format: "10 League Matches + Semi Finals & Grand Final",
+  format: "12 League Matches + Playoffs",
   status: "UPCOMING",
-  announcement: "The 9th BD Community Cup 2026 is officially here! 10 League Matches on Sep 5–6 followed by Playoffs & Grand Final on Labor Day, Sep 7.",
+  announcement: "Official Umpire Fair Play Evaluation Portal for the 2026 BD Community Cup (BDCC).",
 };
 
+export const umpires = [
+  "TAMIM ONI",
+  "VIJAY KHAMMAM",
+  "MOHAMMED ZAMAN",
+  "ANDY KOILPILLAI",
+  "SUSHEEL BHAT",
+  "VINEEL DUSSA",
+  "ABU JAYED RAHI"
+];
+
 export const teams = [
-  { id: "power-rangers", name: "Power Rangers", short: "PWR", color: "from-emerald-600 to-teal-900", border: "border-emerald-500/40" },
-  { id: "sultans-of-sylhet", name: "Sultan's of Sylhet", short: "SOS", color: "from-amber-600 to-amber-900", border: "border-amber-500/40" },
-  { id: "detroit-strikers", name: "Detroit Strikers", short: "DSK", color: "from-blue-600 to-indigo-950", border: "border-blue-500/40" },
-  { id: "friends-united", name: "Friends United Team", short: "FUT", color: "from-rose-600 to-red-950", border: "border-rose-500/40" },
-  { id: "michigan-eagles", name: "Michigan Eagles Team", short: "MIE", color: "from-cyan-600 to-blue-900", border: "border-cyan-500/40" },
-  { id: "sylhet-express", name: "Sylhet Express MI", short: "SXI", color: "from-purple-600 to-indigo-900", border: "border-purple-500/40" },
-  { id: "dream-touch", name: "Dream Touch", short: "DTC", color: "from-pink-600 to-rose-900", border: "border-pink-500/40" },
-  { id: "simbas-riders", name: "Simba's Riders Team", short: "SBR", color: "from-orange-600 to-red-900", border: "border-orange-500/40" },
+  { id: "simbas-riders", name: "Simba's Riders", short: "SBR", color: "from-orange-600 to-red-900" },
+  { id: "sultans-of-sylhet", name: "Sultans of Sylhet", short: "SOS", color: "from-amber-600 to-amber-900" },
+  { id: "detroit-strikers", name: "Detroit Strikers", short: "DSK", color: "from-blue-600 to-indigo-950" },
+  { id: "sylhet-express", name: "Sylhet Express MI", short: "SXI", color: "from-purple-600 to-indigo-900" },
+  { id: "dream-touch", name: "Dream Touch", short: "DTC", color: "from-pink-600 to-rose-900" },
+  { id: "friends-united", name: "Friends United", short: "FUT", color: "from-rose-600 to-red-950" },
+  { id: "power-rangers", name: "Power Rangers", short: "PWR", color: "from-emerald-600 to-teal-900" },
+  { id: "michigan-eagles", name: "Michigan Eagles", short: "MIE", color: "from-cyan-600 to-blue-900" },
 ];
 
 export const venues = [
@@ -78,180 +88,175 @@ export const venues = [
   }
 ];
 
-// Full Official Schedule: 10 League Matches + Semi Finals & Final (Times: 10:00 AM & 2:30 PM)
+// Exact 12 Official Matches from the Form (plus Playoffs)
 export const fixtures = [
-  // SATURDAY, SEPTEMBER 5, 2026 (Day 1 - 5 League Matches)
   {
     id: "m01",
-    matchNo: "League Match 1",
-    stage: "Group A",
-    team1: "Simba's Riders Team",
-    team2: "Sultan's of Sylhet",
+    matchNo: "Match 1",
+    stage: "League Match",
+    team1: "Simba's Riders",
+    team2: "Sultans of Sylhet",
     date: "Saturday, Sep 5, 2026",
     time: "10:00 AM EDT",
     venue: "Lasky Recreation Park",
     status: "UPCOMING",
-    note: "Opening curtain-raiser match at Lasky Park."
+    note: "Official opening league match."
   },
   {
     id: "m02",
-    matchNo: "League Match 2",
-    stage: "Group B",
+    matchNo: "Match 2",
+    stage: "League Match",
     team1: "Detroit Strikers",
     team2: "Sylhet Express MI",
     date: "Saturday, Sep 5, 2026",
     time: "10:00 AM EDT",
     venue: "Jayne Field",
     status: "UPCOMING",
-    note: "Morning group stage clash at Jayne Field."
+    note: "Morning league clash."
   },
   {
     id: "m03",
-    matchNo: "League Match 3",
-    stage: "Group A",
+    matchNo: "Match 3",
+    stage: "League Match",
     team1: "Dream Touch",
-    team2: "Friends United Team",
+    team2: "Friends United",
     date: "Saturday, Sep 5, 2026",
     time: "10:00 AM EDT",
     venue: "Delia Park",
     status: "UPCOMING",
-    note: "Morning group match at Delia Park."
+    note: "Morning league clash at Delia Park."
   },
   {
     id: "m04",
-    matchNo: "League Match 4",
-    stage: "Group B",
-    team1: "Simba's Riders Team",
+    matchNo: "Match 4",
+    stage: "League Match",
+    team1: "Simba's Riders",
     team2: "Detroit Strikers",
     date: "Saturday, Sep 5, 2026",
     time: "2:30 PM EDT",
     venue: "Lasky Recreation Park",
     status: "UPCOMING",
-    note: "Afternoon clash at Lasky Park."
+    note: "Afternoon league match."
   },
   {
     id: "m05",
-    matchNo: "League Match 5",
-    stage: "Group A",
-    team1: "Sultan's of Sylhet",
+    matchNo: "Match 5",
+    stage: "League Match",
+    team1: "Sultans of Sylhet",
     team2: "Sylhet Express MI",
     date: "Saturday, Sep 5, 2026",
     time: "2:30 PM EDT",
     venue: "Jayne Field",
     status: "UPCOMING",
-    note: "Afternoon Group A fixture at Jayne Field."
+    note: "Afternoon rivalry match."
   },
-
-  // SUNDAY, SEPTEMBER 6, 2026 (Day 2 - 5 League Matches)
   {
     id: "m06",
-    matchNo: "League Match 6",
-    stage: "Group B",
+    matchNo: "Match 6",
+    stage: "League Match",
     team1: "Power Rangers",
-    team2: "Michigan Eagles Team",
-    date: "Sunday, Sep 6, 2026",
-    time: "10:00 AM EDT",
-    venue: "Lasky Recreation Park",
+    team2: "Michigan Eagles",
+    date: "Saturday, Sep 5, 2026",
+    time: "2:30 PM EDT",
+    venue: "Delia Park",
     status: "UPCOMING",
-    note: "Sunday morning opener at Lasky Park."
+    note: "Saturday evening clash."
   },
   {
     id: "m07",
-    matchNo: "League Match 7",
-    stage: "Group A",
+    matchNo: "Match 7",
+    stage: "League Match",
     team1: "Dream Touch",
     team2: "Power Rangers",
     date: "Sunday, Sep 6, 2026",
     time: "10:00 AM EDT",
-    venue: "Jayne Field",
+    venue: "Lasky Recreation Park",
     status: "UPCOMING",
-    note: "High-voltage Sunday morning derby at Jayne Field."
+    note: "Sunday morning opener."
   },
   {
     id: "m08",
-    matchNo: "League Match 8",
-    stage: "Group B",
-    team1: "Friends United Team",
-    team2: "Michigan Eagles Team",
+    matchNo: "Match 8",
+    stage: "League Match",
+    team1: "Friends United",
+    team2: "Michigan Eagles",
     date: "Sunday, Sep 6, 2026",
     time: "10:00 AM EDT",
-    venue: "Delia Park",
+    venue: "Jayne Field",
     status: "UPCOMING",
-    note: "Key qualification clash at Delia Park."
+    note: "Sunday morning clash."
   },
   {
     id: "m09",
-    matchNo: "League Match 9",
-    stage: "Group A",
+    matchNo: "Match 9",
+    stage: "League Match",
     team1: "Detroit Strikers",
-    team2: "Sultan's of Sylhet",
+    team2: "Sultans of Sylhet",
     date: "Sunday, Sep 6, 2026",
     time: "10:00 AM EDT",
     venue: "Delia Park",
     status: "UPCOMING",
-    note: "Decisive Group A round-robin finale."
+    note: "Crucial qualification clash."
   },
   {
     id: "m10",
-    matchNo: "League Match 10",
-    stage: "Group B",
+    matchNo: "Match 10",
+    stage: "League Match",
     team1: "Power Rangers",
-    team2: "Friends United Team",
+    team2: "Friends United",
     date: "Sunday, Sep 6, 2026",
     time: "2:30 PM EDT",
     venue: "Lasky Recreation Park",
     status: "UPCOMING",
-    note: "Final group stage match before playoffs."
+    note: "Round-robin showdown."
   },
-   {
+  {
     id: "m11",
-    matchNo: "League Match 11",
-    stage: "Group B",
-    team1: "Michigan Eagles Team",
+    matchNo: "Match 11",
+    stage: "League Match",
+    team1: "Michigan Eagles",
     team2: "Dream Touch",
     date: "Sunday, Sep 6, 2026",
     time: "2:30 PM EDT",
     venue: "Jayne Field",
     status: "UPCOMING",
-    note: "Final group stage match before playoffs."
+    note: "Sunday afternoon fixture."
   },
   {
     id: "m12",
-    matchNo: "League Match 12",
-    stage: "Group B",
+    matchNo: "Match 12",
+    stage: "League Match",
     team1: "Sylhet Express MI",
-    team2: "Simba's Riders Team",
+    team2: "Simba's Riders",
     date: "Sunday, Sep 6, 2026",
     time: "2:30 PM EDT",
     venue: "Delia Park",
     status: "UPCOMING",
-    note: "Final group stage match before playoffs."
+    note: "Final round-robin match before playoffs."
   },
-
-  // MONDAY, SEPTEMBER 7, 2026 (Day 3 - Playoffs & Finals)
   {
     id: "m13",
     matchNo: "Semi Final 1",
     stage: "Knockout",
-    team1: "Group A Winner",
-    team2: "Group B Runner-Up",
+    team1: "Top Seed 1",
+    team2: "Top Seed 4",
     date: "Monday, Sep 7, 2026",
     time: "10:00 AM EDT",
     venue: "Lasky Recreation Park",
     status: "UPCOMING",
-    note: "First semifinal — winner advances directly to the Grand Final."
+    note: "Winner advances directly to Grand Final."
   },
   {
     id: "m14",
     matchNo: "Semi Final 2",
     stage: "Knockout",
-    team1: "Group B Winner",
-    team2: "Group A Runner-Up",
+    team1: "Top Seed 2",
+    team2: "Top Seed 3",
     date: "Monday, Sep 7, 2026",
     time: "10:00 AM EDT",
     venue: "Jayne Field",
     status: "UPCOMING",
-    note: "Second semifinal battle for a finals ticket."
+    note: "Second semifinal match."
   },
   {
     id: "m15",
@@ -263,6 +268,83 @@ export const fixtures = [
     time: "2:30 PM EDT",
     venue: "Lasky Recreation Park",
     status: "UPCOMING",
-    note: "Championship Grand Final, trophy presentation & Fair Play Award ceremony."
+    note: "Grand championship final and award presentations."
+  }
+];
+
+// Exact question definitions from Google Form
+export const SPIRIT_QUESTIONS = [
+  {
+    id: "respectUmpires",
+    label: "Respect Toward Umpires",
+    desc: "Accepting decisions, interaction with match officials (1 = Low, 5 = High)"
+  },
+  {
+    id: "respectOpposition",
+    label: "Respect Toward opposition",
+    desc: "Behavior, conduct, and courtesy towards opponents (1 = Low, 5 = High)"
+  },
+  {
+    id: "respectOwnTeam",
+    label: "Respect Toward own team",
+    desc: "Internal team conduct, captaincy, and player interactions (1 = Low, 5 = High)"
+  },
+  {
+    id: "properAttire",
+    label: "Proper Team Attire",
+    desc: "All players, including 12th man, must be properly dressed in team uniform. The 12th man must wear the designated vest while on the ground. (1 = Low, 5 = High)"
+  }
+];
+
+export const UNFAIR_PLAY_QUESTIONS = [
+  {
+    id: "disputeDecision",
+    label: "To dispute an umpire's decision by word, action or gesture",
+    desc: "0 = No violation, -1 to -5 = Severity of dissent"
+  },
+  {
+    id: "abusiveLanguage",
+    label: "To direct abusive language towards an opponent or umpire",
+    desc: "0 = No violation, -1 to -5 = Severity of abusive language/sledging"
+  },
+  {
+    id: "aggressiveAppeal",
+    label: "To advance towards an umpire in an aggressive manner when appealing",
+    desc: "0 = No violation, -1 to -5 = Severity of intimidating appeals"
+  },
+  {
+    id: "distractOpponent",
+    label: "To seek to distract an opponent either verbally or by harassment with persistent clapping or unnecessary noise",
+    desc: "Under the guise of enthusiasm and motivation of one's own side (0 = No violation, -1 to -5)"
+  },
+  {
+    id: "cheatingSharpPractice",
+    label: "To indulge in cheating or any sharp practice",
+    desc: "For instance: To appeal knowing that the batter is not out (0 = No violation, -1 to -5)"
+  },
+  {
+    id: "timeWasting",
+    label: "Time wasting, team and player involved deliberately wasting time",
+    desc: "0 = No violation, -1 to -5 = Severity of deliberate delays"
+  },
+  {
+    id: "damagingEquipment",
+    label: "Damaging the pitch, bat, wickets, ball or any cricket/ground equipment due to frustration",
+    desc: "0 = No violation, -1 to -5 = Equipment/pitch abuse"
+  },
+  {
+    id: "dangerousBowling",
+    label: "Dangerous or unfair bowling",
+    desc: "0 = No violation, -1 to -5 = Dangerous bowling actions or beamers"
+  },
+  {
+    id: "tamperingBall",
+    label: "Tampering with the ball",
+    desc: "0 = No violation, -1 to -5 = Illegal alteration of ball condition"
+  },
+  {
+    id: "otherUnfairAction",
+    label: "Any other action that considers to be unfair",
+    desc: "0 = No violation, -1 to -5 = Any other unlisted unfair conduct"
   }
 ];
