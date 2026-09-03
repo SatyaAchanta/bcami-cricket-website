@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import UmpirePortal from './components/UmpirePortal';
+import TeamsSection from './components/TeamsSection';
 import MatchCenter from './components/MatchCenter';
+import LiveGameCenter from './components/LiveGameCenter';
 import VenuesGuide from './components/VenuesGuide';
 import AboutLeadership from './components/AboutLeadership';
-import UmpirePortal from './components/UmpirePortal';
 import AuthModal from './components/AuthModal';
 import ContactFooter from './components/ContactFooter';
 import { currentTournament } from './data/cricketData';
@@ -38,16 +40,6 @@ export default function App({ isClerkLive = false }) {
     } catch (e) {}
   };
 
-  const scrollToSchedule = () => {
-    const el = document.getElementById('schedule');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const scrollToUmpirePortal = () => {
-    const el = document.getElementById('umpire-portal');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-white">
       
@@ -57,38 +49,20 @@ export default function App({ isClerkLive = false }) {
         <span>{currentTournament.title} • {currentTournament.dates} • Lasky Recreation Park, Detroit</span>
       </div>
 
-      {/* Navigation */}
+      {/* Navigation (1. Home | 2. Umpire Assessment | 3. Teams | 4. Schedule | 5. Live Links) */}
       <Navbar
         isClerkLive={isClerkLive}
         clerkUser={clerkUser}
         onOpenAuth={() => setAuthModalOpen(true)}
       />
 
-      {/* Main Pages */}
-      <main className="flex-1">
+      {/* Main Pages in Exact Requested Order */}
+      <main className="flex-1 space-y-0">
         
-        {/* 1. Hero & Tournament Overview */}
-        <Hero
-          onExploreFixtures={scrollToSchedule}
-          onExploreTeams={scrollToUmpirePortal}
-        />
+        {/* 1. HOMEPAGE & HERO BANNER */}
+        <Hero />
 
-        {/* 2. Schedule & Fixtures */}
-        <div id="schedule">
-          <MatchCenter />
-        </div>
-
-        {/* 3. Grounds & Venues Directory */}
-        <div id="grounds">
-          <VenuesGuide />
-        </div>
-
-        {/* 4. About BCAMI & Governance */}
-        <div id="about">
-          <AboutLeadership />
-        </div>
-
-        {/* 5. Umpire Fair Play Assessment & Rating Portal */}
+        {/* 2. UMPIRING ASSESSMENT PORTAL */}
         <UmpirePortal
           isClerkLive={isClerkLive}
           clerkUser={clerkUser}
@@ -96,12 +70,27 @@ export default function App({ isClerkLive = false }) {
           onSimulateLogout={handleLogout}
         />
 
+        {/* 3. TEAMS & FRANCHISE SQUADS */}
+        <TeamsSection />
+
+        {/* 4. SCHEDULE & POINTS TABLE STANDINGS */}
+        <MatchCenter />
+
+        {/* 5. LIVE LINKS TO THE GAME & DIGITAL SCORING */}
+        <LiveGameCenter />
+
+        {/* DETROIT GROUNDS & VENUES DIRECTORY */}
+        <VenuesGuide />
+
+        {/* ABOUT BCAMI & LEADERSHIP */}
+        <AboutLeadership />
+
       </main>
 
-      {/* Footer */}
+      {/* FOOTER */}
       <ContactFooter />
 
-      {/* Auth Modal for Umpire login */}
+      {/* Clerk / Local Umpire Auth Modal */}
       <AuthModal
         isOpen={authModalOpen}
         onClose={() => setAuthModalOpen(false)}

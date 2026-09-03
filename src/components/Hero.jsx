@@ -93,22 +93,20 @@ export default function Hero({ onExploreFixtures, onExploreTeams }) {
             {/* Call to Actions */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
               <a
-                href="#match-center"
-                onClick={onExploreFixtures}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-700 text-white font-bold text-sm shadow-lg shadow-emerald-700/30 hover:shadow-emerald-700/50 hover:scale-105 active:scale-95 transition-all"
+                href="#umpire-portal"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-400 hover:to-emerald-600 text-white font-bold text-sm shadow-lg shadow-emerald-950/50 hover:scale-105 active:scale-95 transition-all"
               >
-                <Calendar className="w-4 h-4" />
-                <span>View Match Schedule & Scores</span>
+                <ShieldCheck className="w-4 h-4" />
+                <span>Umpire Fair Play Rating</span>
                 <ChevronRight className="w-4 h-4" />
               </a>
 
               <a
-                href="#teams"
-                onClick={onExploreTeams}
+                href="#schedule"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 font-semibold text-sm transition-all"
               >
-                <Users className="w-4 h-4 text-emerald-400" />
-                <span>Explore 8 Franchises</span>
+                <Calendar className="w-4 h-4 text-emerald-400" />
+                <span>View Tournament Schedule</span>
               </a>
             </div>
           </div>

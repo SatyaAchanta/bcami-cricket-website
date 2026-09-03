@@ -12,20 +12,20 @@ export default function MatchCenter() {
     : fixtures.filter(f => f.stage.toLowerCase().includes(stageFilter.toLowerCase()));
 
   return (
-    <section id="match-center" className="py-16 sm:py-20 bg-slate-900/60 border-b border-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="schedule" className="py-16 sm:py-20 lg:py-24 bg-slate-900/60 border-b border-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider">
             <Calendar className="w-3.5 h-3.5" />
             <span>Match Operations & Schedule</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-            BCAMI Match Center
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
+            Tournament Schedule & Standings
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base">
-            Stay updated with real-time fixtures, ball-by-ball tournament tracking, points table standings, and matchday scorecards.
+          <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+            Stay updated with official fixtures, ground assignments, Group A & B points tables with Net Run Rate (NRR), and previous match results.
           </p>
         </div>
 
