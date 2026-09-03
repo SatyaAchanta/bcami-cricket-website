@@ -14,27 +14,40 @@ import {
   MapPin, 
   Calendar, 
   Trash2,
-  LogOut,
+  Key,
+  Lock,
+  Unlock,
   RefreshCw
 } from 'lucide-react';
 import { fixtures, venues, currentTournament } from '../data/cricketData';
+import { verifyUmpirePin } from '../utils/umpireAuth';
 
 const GOOGLE_SHEETS_WEBHOOK_URL = import.meta.env.VITE_GOOGLE_SHEETS_WEBHOOK_URL;
 
-export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateLogin, onSimulateLogout }) {
+export default function UmpirePortal() {
   const [activeTab, setActiveTab] = useState('rate'); // 'rate' | 'history'
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
   const [sheetSyncStatus, setSheetSyncStatus] = useState(null);
   const [copiedNotification, setCopiedNotification] = useState(false);
 
+  // Umpire PIN State
+  const [umpirePin, setUmpirePin] = useState(() => {
+    try {
+      return localStorage.getItem('bcami_saved_umpire_pin') || '';
+    } catch (e) {
+      return '';
+    }
+  });
+
+  const [pinVerification, setPinVerification] = useState({ valid: false, message: '' });
+
   // Form State
   const [selectedMatchId, setSelectedMatchId] = useState(fixtures[0]?.id || 'custom');
   const [matchNumber, setMatchNumber] = useState('Match 1 (Opening Game)');
   const [matchDate, setMatchDate] = useState(fixtures[0]?.date || 'Saturday, Sep 5, 2026');
   const [venue, setVenue] = useState('Lasky Recreation Park');
-  const [umpireName, setUmpireName] = useState(clerkUser?.fullName || clerkUser?.primaryEmailAddress?.emailAddress || 'Tariqul Anam');
-  const [umpireEmail, setUmpireEmail] = useState(clerkUser?.primaryEmailAddress?.emailAddress || clerkUser?.email || 'tariqul@bcami.org');
+  const [umpireName, setUmpireName] = useState('');
   
   // Flexible Team Inputs (No Team DB required)
   const [teamEvaluated, setTeamEvaluated] = useState('Team A');
@@ -53,6 +66,23 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
   const [incidentDetails, setIncidentDetails] = useState('');
   const [generalComments, setGeneralComments] = useState('');
 
+  // Validate PIN whenever it changes
+  useEffect(() => {
+    if (umpirePin.trim().length >= 4) {
+      const res = verifyUmpirePin(umpirePin);
+      setPinVerification(res);
+      if (res.valid) {
+        setUmpireName(res.umpire.name);
+        try {
+          localStorage.setItem('bcami_saved_umpire_pin', umpirePin.trim());
+        } catch (e) {}
+      }
+    } else {
+      setPinVerification({ valid: false, message: 'Please enter your assigned 4-digit PIN' });
+      setUmpireName('');
+    }
+  }, [umpirePin]);
+
   // Local storage history
   const [submissions, setSubmissions] = useState(() => {
     try {
@@ -65,8 +95,8 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
           venue: 'Lasky Recreation Park',
           team: 'Team A',
           opponent: 'Team B',
-          umpire: 'Tariqul Anam',
-          umpireEmail: 'tariqul@bcami.org',
+          umpire: 'Umpire 1',
+          umpirePin: '1001',
           scores: {
             respectUmpires: 9,
             respectOpponents: 10,
@@ -86,15 +116,6 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
       return [];
     }
   });
-
-  // Sync user details if clerkUser changes
-  useEffect(() => {
-    if (clerkUser) {
-      if (clerkUser.fullName) setUmpireName(clerkUser.fullName);
-      if (clerkUser.primaryEmailAddress?.emailAddress) setUmpireEmail(clerkUser.primaryEmailAddress.emailAddress);
-      else if (clerkUser.email) setUmpireEmail(clerkUser.email);
-    }
-  }, [clerkUser]);
 
   // When match selector changes
   const handleMatchSelect = (e) => {
@@ -127,6 +148,12 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
   // Submit Handler
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!pinVerification.valid) {
+      alert('Please enter a valid 4-digit Umpire PIN before submitting.');
+      return;
+    }
+
     setIsSubmitting(true);
 
     const newEntry = {
@@ -136,8 +163,8 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
       venue,
       team: teamEvaluated.trim(),
       opponent: opponentTeam.trim(),
-      umpire: umpireName || 'Official Umpire',
-      umpireEmail: umpireEmail || 'umpire@bcami.org',
+      umpire: umpireName || `Umpire (PIN: ${umpirePin})`,
+      umpirePin: umpirePin.trim(),
       scores: { ...ratings },
       totalScore,
       maxScore,
@@ -189,7 +216,7 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
   };
 
   const exportToCSV = () => {
-    const headers = ["ID", "Date", "Match", "Venue", "Evaluated Team", "Opponent", "Umpire Name", "Umpire Email", "Respect Umpires (10)", "Respect Opponents (10)", "Captaincy (10)", "Spirit of Cricket (10)", "Over-Rate (10)", "Total Score (50)", "Percentage", "Disciplinary Incident", "Incident Details", "Comments", "Timestamp"];
+    const headers = ["ID", "Date", "Match", "Venue", "Evaluated Team", "Opponent", "Umpire Name", "Umpire PIN", "Respect Umpires (10)", "Respect Opponents (10)", "Captaincy (10)", "Spirit of Cricket (10)", "Over-Rate (10)", "Total Score (50)", "Percentage", "Disciplinary Incident", "Incident Details", "Comments", "Timestamp"];
     
     const rows = submissions.map(s => [
       `"${s.id}"`,
@@ -199,7 +226,7 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
       `"${s.team}"`,
       `"${s.opponent}"`,
       `"${s.umpire}"`,
-      `"${s.umpireEmail}"`,
+      `"${s.umpirePin || ''}"`,
       s.scores.respectUmpires,
       s.scores.respectOpponents,
       s.scores.captainLeadership,
@@ -243,45 +270,37 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Official Match Officials Portal</span>
+              <span>Match Officials Portal</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
               Umpire Fair Play Assessment
             </h2>
             <p className="text-slate-400 text-sm sm:text-base max-w-2xl leading-relaxed">
-              Record official match conduct, disciplinary observations, and sportsmanship ratings following each fixture to determine the <strong>BD Community Cup Fair Play Award</strong>.
+              Enter your assigned 4-digit PIN to evaluate match conduct and determine the <strong>BD Community Cup Fair Play Award</strong>.
             </p>
           </div>
 
-          {/* Authenticated Umpire Card */}
-          <div className="bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl flex items-center justify-between gap-4 shadow-xl shrink-0">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-950 border border-emerald-500/40 flex items-center justify-center text-white font-bold shrink-0">
-                <User className="w-6 h-6" />
+          {/* Umpire Verification Badge / PIN Status */}
+          <div className={`p-4 sm:p-5 rounded-2xl border flex items-center gap-4 transition-all shadow-xl shrink-0 ${
+            pinVerification.valid
+              ? 'bg-emerald-950/60 border-emerald-500/40 text-emerald-300'
+              : 'bg-slate-900/90 border-slate-800 text-slate-400'
+          }`}>
+            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-bold shrink-0 ${
+              pinVerification.valid
+                ? 'bg-emerald-600 text-white'
+                : 'bg-slate-800 text-slate-500'
+            }`}>
+              {pinVerification.valid ? <Unlock className="w-6 h-6" /> : <Lock className="w-6 h-6" />}
+            </div>
+            <div className="space-y-0.5">
+              <div className="text-[11px] font-bold uppercase tracking-wider">
+                {pinVerification.valid ? '✓ Verified Official' : 'Umpire PIN Required'}
               </div>
-              <div className="space-y-0.5">
-                <div className="text-[11px] text-emerald-400 font-bold flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span>Certified Match Official</span>
-                </div>
-                <div className="text-sm sm:text-base font-bold text-white">
-                  {clerkUser?.fullName || umpireName}
-                </div>
-                <div className="text-xs text-slate-400 truncate max-w-[180px]">
-                  {clerkUser?.primaryEmailAddress?.emailAddress || umpireEmail}
-                </div>
+              <div className="text-sm sm:text-base font-black text-white">
+                {pinVerification.valid ? umpireName : 'Enter 4-Digit PIN below'}
               </div>
             </div>
-
-            {onSimulateLogout && (
-              <button
-                onClick={onSimulateLogout}
-                title="Switch umpire / Sign out"
-                className="p-2.5 text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-xl transition-colors"
-              >
-                <LogOut className="w-4 h-4" />
-              </button>
-            )}
           </div>
         </div>
 
@@ -343,19 +362,52 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
                 <h4 className="text-lg font-bold text-white">Assessment Submitted Successfully!</h4>
                 <p className="text-xs text-slate-300">
                   Logged rating for <strong>{teamEvaluated}</strong> ({totalScore}/50 - {percentage}%).
-                  {sheetSyncStatus === 'synced' && ' Synced with Google Sheets.'}
+                  {sheetSyncStatus === 'synced' && ' Synced with Google Sheets in real-time.'}
                 </p>
               </div>
             )}
 
-            {/* 1. Fixture & Match Info */}
+            {/* 1. Umpire Verification & Match Info */}
             <div className="space-y-4">
               <h3 className="text-sm sm:text-base font-black text-white uppercase tracking-wider flex items-center gap-2 border-b border-slate-800 pb-2">
-                <Calendar className="w-4 h-4 text-emerald-400" />
-                1. Match & Official Information
+                <Key className="w-4 h-4 text-emerald-400" />
+                1. Umpire PIN & Match Information
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs sm:text-sm">
+                
+                {/* PIN Input */}
+                <div className="p-3.5 rounded-2xl bg-slate-950 border border-emerald-500/40 space-y-2">
+                  <label className="block text-emerald-400 font-bold flex items-center gap-1.5">
+                    <Lock className="w-3.5 h-3.5" />
+                    Enter Your 4-Digit Umpire PIN *
+                  </label>
+                  <input
+                    type="password"
+                    maxLength={6}
+                    required
+                    value={umpirePin}
+                    onChange={(e) => setUmpirePin(e.target.value)}
+                    placeholder="e.g. 1001"
+                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white font-mono text-base font-black tracking-widest text-center focus:outline-none focus:border-emerald-500"
+                  />
+                  <div className={`text-[11px] font-semibold text-center ${
+                    pinVerification.valid ? 'text-emerald-400' : 'text-slate-500'
+                  }`}>
+                    {pinVerification.valid ? `✓ ${pinVerification.message}` : pinVerification.message}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-slate-300 font-semibold mb-1.5">Verified Umpire Name</label>
+                  <input
+                    type="text"
+                    disabled
+                    value={pinVerification.valid ? umpireName : 'Enter valid PIN above'}
+                    className="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-300 font-bold focus:outline-none"
+                  />
+                </div>
+
                 <div>
                   <label className="block text-slate-300 font-semibold mb-1.5">Select Scheduled Fixture</label>
                   <select
@@ -386,24 +438,13 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
                 </div>
 
                 <div>
-                  <label className="block text-slate-300 font-semibold mb-1.5">Reporting Umpire</label>
-                  <input
-                    type="text"
-                    required
-                    value={umpireName}
-                    onChange={(e) => setUmpireName(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-emerald-500"
-                  />
-                </div>
-
-                <div>
                   <label className="block text-slate-300 font-semibold mb-1.5">Team Being Evaluated</label>
                   <input
                     type="text"
                     required
                     value={teamEvaluated}
                     onChange={(e) => setTeamEvaluated(e.target.value)}
-                    placeholder="Enter team name"
+                    placeholder="e.g. Team A"
                     className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white font-bold text-emerald-400 focus:outline-none focus:border-emerald-500"
                   />
                 </div>
@@ -415,17 +456,7 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
                     required
                     value={opponentTeam}
                     onChange={(e) => setOpponentTeam(e.target.value)}
-                    placeholder="Enter opponent team name"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-emerald-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-slate-300 font-semibold mb-1.5">Match Date</label>
-                  <input
-                    type="text"
-                    value={matchDate}
-                    onChange={(e) => setMatchDate(e.target.value)}
+                    placeholder="e.g. Team B"
                     className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-emerald-500"
                   />
                 </div>
@@ -618,8 +649,12 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
             <div className="pt-2 flex justify-end">
               <button
                 type="submit"
-                disabled={isSubmitting}
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-400 hover:to-emerald-600 text-white font-black text-sm sm:text-base shadow-xl shadow-emerald-950/50 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
+                disabled={isSubmitting || !pinVerification.valid}
+                className={`w-full sm:w-auto px-8 py-4 rounded-2xl font-black text-sm sm:text-base shadow-xl flex items-center justify-center gap-2 transition-all ${
+                  pinVerification.valid
+                    ? 'bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-400 hover:to-emerald-600 text-white shadow-emerald-950/50 hover:scale-105 active:scale-95'
+                    : 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                }`}
               >
                 {isSubmitting ? (
                   <>
@@ -629,7 +664,7 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
                 ) : (
                   <>
                     <Send className="w-4 h-4" />
-                    <span>Submit Official Assessment</span>
+                    <span>{pinVerification.valid ? `Submit as ${umpireName}` : 'Enter Valid PIN to Submit'}</span>
                   </>
                 )}
               </button>
@@ -698,9 +733,8 @@ export default function UmpirePortal({ clerkUser, isClerkConfigured, onSimulateL
                               {item.percentage >= 80 ? 'Grade A' : 'Grade B'}
                             </span>
                           </td>
-                          <td className="py-3.5 px-3 text-slate-300 text-xs">
-                            <span className="font-semibold block">{item.umpire}</span>
-                            <span className="text-[10px] text-slate-500">{item.umpireEmail}</span>
+                          <td className="py-3.5 px-3 text-slate-300 text-xs font-semibold">
+                            {item.umpire}
                           </td>
                           <td className="py-3.5 px-3 text-right">
                             <button

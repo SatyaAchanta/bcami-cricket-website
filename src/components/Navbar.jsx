@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Home, ShieldCheck, Calendar, MapPin, Menu, X, LogIn } from 'lucide-react';
-import { ClerkLiveNavbar } from './ClerkAuthBridge';
+import { Home, ShieldCheck, Calendar, MapPin, Menu, X } from 'lucide-react';
 import { orgInfo } from '../data/cricketData';
 
-export default function Navbar({ onOpenAuth, clerkUser, isClerkLive }) {
+export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
@@ -61,9 +60,9 @@ export default function Navbar({ onOpenAuth, clerkUser, isClerkLive }) {
                 key={item.name}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className={`px-3.5 py-2 rounded-xl text-xs xl:text-sm font-semibold transition-all flex items-center gap-2 ${
+                className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 ${
                   item.highlight
-                    ? 'bg-emerald-950/70 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-900 hover:text-white'
+                    ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-900 hover:text-white shadow-sm'
                     : 'text-slate-300 hover:text-white hover:bg-slate-900'
                 }`}
               >
@@ -73,28 +72,16 @@ export default function Navbar({ onOpenAuth, clerkUser, isClerkLive }) {
             ))}
           </nav>
 
-          {/* Right Action: Live Clerk / Local Umpire Auth */}
+          {/* Right Action: Direct Jump to Assessment */}
           <div className="flex items-center gap-3">
-            {isClerkLive ? (
-              <ClerkLiveNavbar onScrollToSection={handleNavClick} />
-            ) : clerkUser ? (
-              <a
-                href="#umpire-portal"
-                onClick={(e) => handleNavClick(e, '#umpire-portal')}
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900 border border-emerald-500/40 text-xs font-bold text-emerald-300 hover:bg-slate-800 transition-all"
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span className="max-w-[120px] truncate">{clerkUser.fullName || 'Umpire Active'}</span>
-              </a>
-            ) : (
-              <button
-                onClick={onOpenAuth}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white text-xs sm:text-sm font-bold shadow-lg shadow-emerald-950/50 transition-all"
-              >
-                <LogIn className="w-4 h-4" />
-                <span>Umpire Login</span>
-              </button>
-            )}
+            <a
+              href="#umpire-portal"
+              onClick={(e) => handleNavClick(e, '#umpire-portal')}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white text-xs sm:text-sm font-bold shadow-lg shadow-emerald-950/50 transition-all"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              <span>Rate Match</span>
+            </a>
 
             {/* Mobile Hamburger Toggle */}
             <button
@@ -127,18 +114,6 @@ export default function Navbar({ onOpenAuth, clerkUser, isClerkLive }) {
               </div>
             </a>
           ))}
-          <div className="pt-3 border-t border-slate-800">
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenAuth();
-              }}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-emerald-600 text-white font-bold text-sm"
-            >
-              <LogIn className="w-4 h-4" />
-              <span>{clerkUser ? 'Manage Umpire Session' : 'Umpire Login (Clerk)'}</span>
-            </button>
-          </div>
         </div>
       )}
     </header>

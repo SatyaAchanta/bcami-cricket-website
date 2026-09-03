@@ -1,42 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import UmpirePortal from './components/UmpirePortal';
 import MatchCenter from './components/MatchCenter';
 import VenuesGuide from './components/VenuesGuide';
-import AuthModal from './components/AuthModal';
 import ContactFooter from './components/ContactFooter';
 import { currentTournament } from './data/cricketData';
 
-export default function App({ isClerkLive = false }) {
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [clerkUser, setClerkUser] = useState(() => {
-    try {
-      const saved = localStorage.getItem('bcami_current_umpire');
-      return saved ? JSON.parse(saved) : {
-        fullName: 'Tariqul Anam',
-        email: 'tariqul@bcami.org',
-        primaryEmailAddress: { emailAddress: 'tariqul@bcami.org' }
-      };
-    } catch (e) {
-      return null;
-    }
-  });
-
-  const handleLogin = (user) => {
-    setClerkUser(user);
-    try {
-      localStorage.setItem('bcami_current_umpire', JSON.stringify(user));
-    } catch (e) {}
-  };
-
-  const handleLogout = () => {
-    setClerkUser(null);
-    try {
-      localStorage.removeItem('bcami_current_umpire');
-    } catch (e) {}
-  };
-
+export default function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-white overflow-x-hidden">
       
@@ -47,11 +18,7 @@ export default function App({ isClerkLive = false }) {
       </div>
 
       {/* Navigation (Home | Umpire Assessment | Schedule | Detroit Grounds) */}
-      <Navbar
-        isClerkLive={isClerkLive}
-        clerkUser={clerkUser}
-        onOpenAuth={() => setAuthModalOpen(true)}
-      />
+      <Navbar />
 
       {/* Main Streamlined Sections */}
       <main className="flex-1 space-y-0">
@@ -59,13 +26,8 @@ export default function App({ isClerkLive = false }) {
         {/* 1. HOMEPAGE */}
         <Hero />
 
-        {/* 2. UMPIRING ASSESSMENT PORTAL */}
-        <UmpirePortal
-          isClerkLive={isClerkLive}
-          clerkUser={clerkUser}
-          onSimulateLogin={() => setAuthModalOpen(true)}
-          onSimulateLogout={handleLogout}
-        />
+        {/* 2. UMPIRING ASSESSMENT PORTAL WITH UNIQUE PIN VERIFICATION */}
+        <UmpirePortal />
 
         {/* 3. TOURNAMENT SCHEDULE */}
         <MatchCenter />
@@ -77,16 +39,6 @@ export default function App({ isClerkLive = false }) {
 
       {/* FOOTER */}
       <ContactFooter />
-
-      {/* Clerk / Local Umpire Auth Modal */}
-      <AuthModal
-        isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
-        currentUser={clerkUser}
-        onLogin={handleLogin}
-        onLogout={handleLogout}
-        isClerkConfigured={isClerkLive}
-      />
 
     </div>
   );
