@@ -1,13 +1,13 @@
 // Utility to parse and verify individual umpire PINs from .env
 
 export const OFFICIAL_UMPIRES = [
-  { pin: '1001', name: 'TAMIM ONI' },
-  { pin: '1002', name: 'VIJAY KHAMMAM' },
-  { pin: '1003', name: 'MOHAMMED ZAMAN' },
-  { pin: '1004', name: 'ANDY KOILPILLAI' },
-  { pin: '1005', name: 'SUSHEEL BHAT' },
-  { pin: '1006', name: 'VINEEL DUSSA' },
-  { pin: '1007', name: 'ABU JAYED RAHI' },
+  { pin: '4829', name: 'TAMIM ONI' },
+  { pin: '7163', name: 'VIJAY KHAMMAM' },
+  { pin: '9341', name: 'MOHAMMED ZAMAN' },
+  { pin: '2587', name: 'ANDY KOILPILLAI' },
+  { pin: '6194', name: 'SUSHEEL BHAT' },
+  { pin: '3720', name: 'VINEEL DUSSA' },
+  { pin: '8452', name: 'ABU JAYED RAHI' },
 ];
 
 export function getAuthorizedUmpires() {
