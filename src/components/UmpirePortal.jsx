@@ -19,7 +19,7 @@ import {
   Unlock,
   RefreshCw
 } from 'lucide-react';
-import { fixtures, venues, currentTournament } from '../data/cricketData';
+import { fixtures, venues, currentTournament, teams } from '../data/cricketData';
 import { verifyUmpirePin } from '../utils/umpireAuth';
 
 const GOOGLE_SHEETS_WEBHOOK_URL = import.meta.env.VITE_GOOGLE_SHEETS_WEBHOOK_URL;
@@ -439,26 +439,28 @@ export default function UmpirePortal() {
 
                 <div>
                   <label className="block text-slate-300 font-semibold mb-1.5">Team Being Evaluated</label>
-                  <input
-                    type="text"
-                    required
+                  <select
                     value={teamEvaluated}
                     onChange={(e) => setTeamEvaluated(e.target.value)}
-                    placeholder="e.g. Team A"
                     className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white font-bold text-emerald-400 focus:outline-none focus:border-emerald-500"
-                  />
+                  >
+                    {teams.map(t => (
+                      <option key={t.id} value={t.name}>{t.name}</option>
+                    ))}
+                  </select>
                 </div>
 
                 <div>
                   <label className="block text-slate-300 font-semibold mb-1.5">Opponent Team</label>
-                  <input
-                    type="text"
-                    required
+                  <select
                     value={opponentTeam}
                     onChange={(e) => setOpponentTeam(e.target.value)}
-                    placeholder="e.g. Team B"
                     className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-white focus:outline-none focus:border-emerald-500"
-                  />
+                  >
+                    {teams.map(t => (
+                      <option key={t.id} value={t.name}>{t.name}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
             </div>
