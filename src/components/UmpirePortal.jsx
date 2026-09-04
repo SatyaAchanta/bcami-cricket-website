@@ -49,6 +49,7 @@ const createInitialTeamRatings = () => ({
 export default function UmpirePortal() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
+  const [lastSubmissionSnapshot, setLastSubmissionSnapshot] = useState(null);
   const [activeTeamTab, setActiveTeamTab] = useState('team1'); // 'team1' | 'team2' | 'summary'
 
   // Umpire PIN State
@@ -187,6 +188,14 @@ export default function UmpirePortal() {
       localStorage.setItem('bcami_dual_ratings', JSON.stringify([submissionPayload, ...existing]));
     } catch (err) {}
 
+    // Save snapshot for confirmation message
+    setLastSubmissionSnapshot({
+      t1Name: team1Name,
+      t1Score: t1Score.netScore,
+      t2Name: team2Name,
+      t2Score: t2Score.netScore
+    });
+
     setIsSubmitting(false);
     setSubmittedSuccess(true);
 
@@ -196,7 +205,7 @@ export default function UmpirePortal() {
 
     setTimeout(() => {
       setSubmittedSuccess(false);
-    }, 5000);
+    }, 6000);
   };
 
   // Reusable Team Rating Sub-Form
@@ -405,12 +414,12 @@ export default function UmpirePortal() {
         {/* MAIN DUAL ASSESSMENT FORM */}
         <form onSubmit={handleSubmit} className="space-y-8 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl">
           
-          {submittedSuccess && (
+          {submittedSuccess && lastSubmissionSnapshot && (
             <div className="p-6 bg-emerald-950 border border-emerald-500 rounded-2xl text-center space-y-2 animate-in fade-in duration-200">
               <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto" />
               <h4 className="text-lg font-bold text-white">Fair Play Assessment Submitted Successfully!</h4>
-              <p className="text-xs text-slate-300">
-                Logged ratings for both <strong>{team1Name}</strong> ({t1Score.netScore}/20) and <strong>{team2Name}</strong> ({t2Score.netScore}/20) directly to the Committee.
+              <p className="text-xs sm:text-sm text-slate-300">
+                Recorded official ratings: <strong>{lastSubmissionSnapshot.t1Name}</strong> ({lastSubmissionSnapshot.t1Score}/20) & <strong>{lastSubmissionSnapshot.t2Name}</strong> ({lastSubmissionSnapshot.t2Score}/20).
               </p>
             </div>
           )}
