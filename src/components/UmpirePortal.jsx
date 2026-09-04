@@ -111,8 +111,8 @@ export default function UmpirePortal() {
   // Helper calculation for a team
   const calculateTeamScore = (teamData) => {
     const spiritTotal = Object.values(teamData.spirit).reduce((sum, v) => sum + Number(v), 0); // Max 20
-    const deductionTotal = Object.values(teamData.deductions).reduce((sum, v) => sum + Math.abs(Number(v)), 0); // Negative sum
-    const netScore = Math.max(0, spiritTotal - deductionTotal);
+    const deductionTotal = Object.values(teamData.deductions).reduce((sum, v) => sum + Math.abs(Number(v)), 0); // Sum of deductions
+    const netScore = spiritTotal - deductionTotal; // Allow negative total scores
     const maxScore = 20;
     const percentage = Math.round((netScore / maxScore) * 100);
     return { spiritTotal, deductionTotal, netScore, maxScore, percentage };
@@ -222,8 +222,12 @@ export default function UmpirePortal() {
               <span className="text-[10px] uppercase font-bold text-red-400 block">Deductions</span>
               <span className="text-base font-black text-red-400 font-mono">-{scoreInfo.deductionTotal}</span>
             </div>
-            <div className="px-4 py-2 bg-emerald-950/80 rounded-xl border border-emerald-500/40">
-              <span className="text-[10px] uppercase font-bold text-emerald-300 block">Net Fair Play Score</span>
+            <div className={`px-4 py-2 rounded-xl border ${
+              scoreInfo.netScore < 0 
+                ? 'bg-red-950/80 border-red-500/50 text-red-300' 
+                : 'bg-emerald-950/80 border-emerald-500/40 text-emerald-300'
+            }`}>
+              <span className="text-[10px] uppercase font-bold block">Net Fair Play Score</span>
               <span className="text-xl font-black text-white font-mono">{scoreInfo.netScore}/20 ({scoreInfo.percentage}%)</span>
             </div>
           </div>
@@ -558,11 +562,15 @@ export default function UmpirePortal() {
             <div className="grid grid-cols-2 gap-4 w-full sm:w-auto">
               <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-center">
                 <span className="text-[10px] uppercase font-bold text-slate-400 block">{team1Name} Score</span>
-                <span className="text-xl font-black text-emerald-400 font-mono">{t1Score.netScore} / 20</span>
+                <span className={`text-xl font-black font-mono ${t1Score.netScore < 0 ? 'text-red-400' : 'text-emerald-400'}`}>
+                  {t1Score.netScore} / 20
+                </span>
               </div>
               <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-center">
                 <span className="text-[10px] uppercase font-bold text-slate-400 block">{team2Name} Score</span>
-                <span className="text-xl font-black text-cyan-400 font-mono">{t2Score.netScore} / 20</span>
+                <span className={`text-xl font-black font-mono ${t2Score.netScore < 0 ? 'text-red-400' : 'text-cyan-400'}`}>
+                  {t2Score.netScore} / 20
+                </span>
               </div>
             </div>
 
