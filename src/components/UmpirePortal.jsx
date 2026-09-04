@@ -222,13 +222,13 @@ export default function UmpirePortal() {
             <h3 className="text-xl sm:text-2xl font-black text-white">{teamName}</h3>
           </div>
 
-          <div className="flex items-center gap-4 text-center">
-            <div className="px-3 py-1.5 bg-slate-900 rounded-xl border border-slate-800">
-              <span className="text-[10px] uppercase font-bold text-emerald-400 block">Spirit Points</span>
-              <span className="text-base font-black text-white font-mono">{scoreInfo.spiritTotal}/20</span>
+          <div className="flex items-center gap-3 sm:gap-4 text-center flex-wrap justify-center">
+            <div className="px-3.5 py-1.5 bg-slate-900 rounded-xl border border-slate-800">
+              <span className="text-[10px] uppercase font-bold text-emerald-400 block">Total Gained</span>
+              <span className="text-base font-black text-emerald-300 font-mono">+{scoreInfo.spiritTotal}/20</span>
             </div>
-            <div className="px-3 py-1.5 bg-slate-900 rounded-xl border border-slate-800">
-              <span className="text-[10px] uppercase font-bold text-red-400 block">Deductions</span>
+            <div className="px-3.5 py-1.5 bg-slate-900 rounded-xl border border-slate-800">
+              <span className="text-[10px] uppercase font-bold text-red-400 block">Total Deductions</span>
               <span className="text-base font-black text-red-400 font-mono">-{scoreInfo.deductionTotal}</span>
             </div>
             <div className={`px-4 py-2 rounded-xl border ${
@@ -236,7 +236,7 @@ export default function UmpirePortal() {
                 ? 'bg-red-950/80 border-red-500/50 text-red-300' 
                 : 'bg-emerald-950/80 border-emerald-500/40 text-emerald-300'
             }`}>
-              <span className="text-[10px] uppercase font-bold block">Net Fair Play Score</span>
+              <span className="text-[10px] uppercase font-bold block">Net Total Score</span>
               <span className="text-xl font-black text-white font-mono">{scoreInfo.netScore}/20 ({scoreInfo.percentage}%)</span>
             </div>
           </div>
@@ -569,15 +569,21 @@ export default function UmpirePortal() {
           {/* Bottom Combined Summary & Submit Bar */}
           <div className="bg-slate-950 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="grid grid-cols-2 gap-4 w-full sm:w-auto">
-              <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-center">
-                <span className="text-[10px] uppercase font-bold text-slate-400 block">{team1Name} Score</span>
-                <span className={`text-xl font-black font-mono ${t1Score.netScore < 0 ? 'text-red-400' : 'text-emerald-400'}`}>
+              <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-center space-y-1">
+                <span className="text-[10px] uppercase font-bold text-slate-400 block">{team1Name}</span>
+                <div className="text-xs text-slate-400 font-mono">
+                  <span className="text-emerald-400">+{t1Score.spiritTotal}</span> / <span className="text-red-400">-{t1Score.deductionTotal}</span>
+                </div>
+                <span className={`text-xl font-black font-mono block ${t1Score.netScore < 0 ? 'text-red-400' : 'text-emerald-400'}`}>
                   {t1Score.netScore} / 20
                 </span>
               </div>
-              <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-center">
-                <span className="text-[10px] uppercase font-bold text-slate-400 block">{team2Name} Score</span>
-                <span className={`text-xl font-black font-mono ${t2Score.netScore < 0 ? 'text-red-400' : 'text-cyan-400'}`}>
+              <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-center space-y-1">
+                <span className="text-[10px] uppercase font-bold text-slate-400 block">{team2Name}</span>
+                <div className="text-xs text-slate-400 font-mono">
+                  <span className="text-emerald-400">+{t2Score.spiritTotal}</span> / <span className="text-red-400">-{t2Score.deductionTotal}</span>
+                </div>
+                <span className={`text-xl font-black font-mono block ${t2Score.netScore < 0 ? 'text-red-400' : 'text-cyan-400'}`}>
                   {t2Score.netScore} / 20
                 </span>
               </div>
